@@ -10,7 +10,8 @@ import {
   ChevronDown, 
   ArrowRight,
   ShieldCheck,
-  FileText
+  FileText,
+  Box
 } from 'lucide-react';
 
 export default function ThreeScrollExperience({ setActivePage }) {
@@ -18,9 +19,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
   const canvasMountRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Exact timeline configuration: distinct non-overlapping milestones
-  // halfWidth = 0.09 ensures each card ONLY lives in [center - 0.09, center + 0.09]
-  // Buffer gap of ~0.10 between cards ensures ZERO 2-card overlap!
+  // Exact timeline configuration: 4 distinct non-overlapping milestones
   const steps = [
     {
       step: 1,
@@ -31,6 +30,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
       title: "VÕ MINH KIỆT",
       subtitle: "Sinh viên năm 4 • Đại học Lạc Hồng",
       desc: "Nền tảng vững chắc về mô hình hóa cơ khí 3D CAD trên SolidWorks, làm chủ lập trình vi điều khiển ARM STM32 và am hiểu quy trình sản xuất công nghiệp 3S-5S.",
+      faceLabel: "Mặt Trước: Chân Dung Đêm",
       stats: [
         { label: "Chuyên ngành", val: "Cơ Điện Tử" },
         { label: "Tốt nghiệp", val: "T5/2027" },
@@ -48,6 +48,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
       title: "Đại Học Lạc Hồng (LHU)",
       subtitle: "Khoa Cơ Điện Tử • Khóa 2023 - 2027",
       desc: "Tiếp cận chương trình đào tạo kỹ thuật ứng dụng thực tiễn: Cơ học lý thuyết, Chi tiết máy, Đồ họa kỹ thuật CAD, Hệ thống nhúng vi điều khiển và Tự động hóa dây chuyền.",
+      faceLabel: "Mặt Phải: Sinh Viên LHU",
       stats: [
         { label: "Chương trình", val: "Kỹ sư 4 năm" },
         { label: "Ngoại ngữ", val: "Tiếng Anh & Tiếng Trung" },
@@ -65,6 +66,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
       title: "SolidWorks CSWA Quốc Tế",
       subtitle: "Certified SolidWorks Associate (Dassault Systèmes)",
       desc: "Khẳng định chuyên môn mô hình hóa chi tiết phức tạp, lắp ráp cụm máy kiểm tra xung đột động học và xuất bản vẽ gia công 2D đạt chuẩn kỹ thuật quốc tế ISO/JIS.",
+      faceLabel: "Mặt Sau: Tinh Thần Đồng Đội",
       stats: [
         { label: "Xác thực", val: "Dassault Systèmes" },
         { label: "Kỹ năng", val: "Part & Assembly" },
@@ -82,6 +84,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
       title: "Thực Tập Brother Sài Gòn",
       subtitle: "KCN Amata, Long Bình, Đồng Nai • Chuẩn 3S-5S",
       desc: "Trực tiếp vận hành máy may công nghiệp tiêu chuẩn Nhật Bản. Tuân thủ nghiêm ngặt nguyên tắc Zero-Defect (Không tạo hàng NG - Not Good), đảm bảo an toàn tuyệt đối và năng suất.",
+      faceLabel: "Mặt Trái: Đời Thường & Năng Động",
       stats: [
         { label: "Nhà máy", val: "Brother Amata" },
         { label: "Tiêu chuẩn", val: "3S-5S Nhật Bản" },
@@ -118,7 +121,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Three.js 3D Solid Model & Continuous Fluid Motion
+  // Three.js 3D Cyber Cube with 4 Authentic Faces
   useEffect(() => {
     if (!canvasMountRef.current) return;
     const mount = canvasMountRef.current;
@@ -134,72 +137,77 @@ export default function ThreeScrollExperience({ setActivePage }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mount.appendChild(renderer.domElement);
 
-    // Lights
+    // Dynamic Lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
     scene.add(ambientLight);
 
     const keyLight = new THREE.DirectionalLight(0x00f2fe, 4.0);
-    keyLight.position.set(14, 18, 16);
+    keyLight.position.set(15, 18, 16);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xf59e0b, 3.0);
-    rimLight.position.set(-14, -12, -10);
+    const rimLight = new THREE.DirectionalLight(0xf59e0b, 3.2);
+    rimLight.position.set(-15, -12, -10);
     scene.add(rimLight);
 
     const pointLight = new THREE.PointLight(0x38bdf8, 2.5, 45);
-    pointLight.position.set(0, 0, 12);
+    pointLight.position.set(0, 0, 14);
     scene.add(pointLight);
 
-    // Main 3D Solid Character Plaque / Monolith Group
-    const monolithGroup = new THREE.Group();
-    scene.add(monolithGroup);
+    // Main 3D Cube Group
+    const cubeGroup = new THREE.Group();
+    scene.add(cubeGroup);
 
-    // 1. Solid Block Geometry with Physical Depth (Thickness)
-    const blockWidth = 7.8;
-    const blockHeight = 10.8;
-    const blockDepth = 1.0;
-    const blockGeo = new THREE.BoxGeometry(blockWidth, blockHeight, blockDepth);
+    // 1. Equal 3D Cube Geometry (Hộp hình vuông 3D: 8.0 x 8.0 x 8.0)
+    const cubeSize = 8.0;
+    const cubeGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
+    // Texture Loader for 4 Distinct Photos of Kiệt
     const textureLoader = new THREE.TextureLoader();
-    const portraitTex = textureLoader.load('./images/avatar_night.jpg');
-    portraitTex.colorSpace = THREE.SRGBColorSpace;
 
-    const metallicSideMat = new THREE.MeshStandardMaterial({
-      color: 0x0f172a,
-      metalness: 0.92,
+    // Face 4 (+Z Front): Hero Night Portrait
+    const texFront = textureLoader.load('./images/avatar_night.jpg');
+    texFront.colorSpace = THREE.SRGBColorSpace;
+
+    // Face 5 (-Z Back): Friends & Billiards
+    const texBack = textureLoader.load('./images/kiet_billiards.png');
+    texBack.colorSpace = THREE.SRGBColorSpace;
+
+    // Face 0 (+X Right): Official LHU Student Photo
+    const texRight = textureLoader.load('./images/kiet_official.png');
+    texRight.colorSpace = THREE.SRGBColorSpace;
+
+    // Face 1 (-X Left): Casual Chill Portrait
+    const texLeft = textureLoader.load('./images/kiet_chill.jpg');
+    texLeft.colorSpace = THREE.SRGBColorSpace;
+
+    // Top & Bottom: Brushed Mechatronic Titanium Plates
+    const topBottomMat = new THREE.MeshStandardMaterial({
+      color: 0x091220,
+      metalness: 0.95,
       roughness: 0.15,
     });
 
-    const frontMat = new THREE.MeshStandardMaterial({
-      map: portraitTex,
-      metalness: 0.1,
-      roughness: 0.3,
-    });
+    // Box Materials Array: [+X, -X, +Y, -Y, +Z, -Z]
+    const cubeMaterials = [
+      new THREE.MeshStandardMaterial({ map: texRight, roughness: 0.25 }), // Right (+X): LHU Official
+      new THREE.MeshStandardMaterial({ map: texLeft, roughness: 0.25 }),  // Left (-X): Casual Chill
+      topBottomMat,                                                       // Top (+Y): Metallic Plate
+      topBottomMat,                                                       // Bottom (-Y): Metallic Plate
+      new THREE.MeshStandardMaterial({ map: texFront, roughness: 0.25 }), // Front (+Z): Hero Portrait
+      new THREE.MeshStandardMaterial({ map: texBack, roughness: 0.25 }),  // Back (-Z): Billiards & Team
+    ];
 
-    const backMat = new THREE.MeshStandardMaterial({
-      color: 0x060c18,
-      metalness: 0.96,
-      roughness: 0.18,
-    });
+    const cubeMesh = new THREE.Mesh(cubeGeo, cubeMaterials);
+    cubeGroup.add(cubeMesh);
 
-    const monolithMesh = new THREE.Mesh(blockGeo, [
-      metallicSideMat, // right
-      metallicSideMat, // left
-      metallicSideMat, // top
-      metallicSideMat, // bottom
-      frontMat,        // front
-      backMat          // back
-    ]);
-    monolithGroup.add(monolithMesh);
-
-    // Glowing Neon Edge Lines for the Solid Model
-    const edgesGeo = new THREE.EdgesGeometry(blockGeo);
-    const edgesMat = new THREE.LineBasicMaterial({ color: 0x00f2fe, linewidth: 2 });
+    // 2. Glowing Neon Edge Wireframe for the Cube
+    const edgesGeo = new THREE.EdgesGeometry(cubeGeo);
+    const edgesMat = new THREE.LineBasicMaterial({ color: 0x00f2fe, linewidth: 2.5 });
     const edgesLine = new THREE.LineSegments(edgesGeo, edgesMat);
-    monolithGroup.add(edgesLine);
+    cubeGroup.add(edgesLine);
 
-    // 2. Mechatronic Rotating Planetary Gear / Circuit Rings
-    const ringGeo1 = new THREE.TorusGeometry(8.2, 0.09, 16, 120);
+    // 3. Rotating Mechatronic Gear Rings orbiting the Cube
+    const ringGeo1 = new THREE.TorusGeometry(7.2, 0.09, 16, 120);
     const ringMat1 = new THREE.MeshStandardMaterial({
       color: 0x38bdf8,
       metalness: 0.85,
@@ -209,9 +217,9 @@ export default function ThreeScrollExperience({ setActivePage }) {
     });
     const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
     ring1.rotation.x = Math.PI / 2;
-    monolithGroup.add(ring1);
+    cubeGroup.add(ring1);
 
-    const ringGeo2 = new THREE.TorusGeometry(9.4, 0.07, 16, 120);
+    const ringGeo2 = new THREE.TorusGeometry(8.2, 0.07, 16, 120);
     const ringMat2 = new THREE.MeshStandardMaterial({ 
       color: 0xf59e0b, 
       metalness: 0.85,
@@ -220,20 +228,20 @@ export default function ThreeScrollExperience({ setActivePage }) {
     });
     const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
     ring2.rotation.y = Math.PI / 3;
-    monolithGroup.add(ring2);
+    cubeGroup.add(ring2);
 
-    // 3. Cyber Hologram Base Pedestal
-    const baseGeo = new THREE.CylinderGeometry(5.8, 6.5, 0.6, 36);
+    // 4. Cyber Hologram Base Pedestal
+    const baseGeo = new THREE.CylinderGeometry(5.8, 6.6, 0.6, 36);
     const baseMat = new THREE.MeshStandardMaterial({
       color: 0x09111e,
       metalness: 0.9,
       roughness: 0.25
     });
     const pedestal = new THREE.Mesh(baseGeo, baseMat);
-    pedestal.position.y = -6.0;
-    monolithGroup.add(pedestal);
+    pedestal.position.y = -5.4;
+    cubeGroup.add(pedestal);
 
-    // Background floating particle swarm
+    // 5. Floating background particle swarm
     const pCount = 160;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(pCount * 3);
@@ -272,7 +280,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     };
     window.addEventListener('resize', onResize);
 
-    // Animation loop with continuous mathematical curves (BOTH scroll down and scroll up!)
+    // Animation Loop: Cube spins continuously revealing all 4 faces
     let animId;
     const clock = new THREE.Clock();
 
@@ -292,12 +300,15 @@ export default function ThreeScrollExperience({ setActivePage }) {
       currentP += (targetP - currentP) * 0.085;
 
       // CONTINUOUS FLUID 3D MATH CURVES
-      // Seamlessly alternates between +4.6 (Right) and -4.6 (Left) matching card sides
+      // Position weaves between right (+4.5) and left (-4.5)
       const targetX = isMobile ? 0 : Math.cos(currentP * Math.PI * 3.3) * 4.6;
       const targetY = Math.sin(currentP * Math.PI * 4) * 0.35 + Math.sin(time * 1.5) * 0.16;
       const targetZ = Math.sin(currentP * Math.PI) * 1.5;
-      const targetRotY = (currentP * Math.PI * 2.8) - 0.25;
-      const targetRotX = Math.sin(currentP * Math.PI * 3) * 0.14 + (mouseY * -0.15);
+
+      // Rotation Y smoothly spans 360 degrees (0 to 2*PI*1.5), so all 4 cube faces rotate through!
+      // Face 1 (Front: Hero) -> Face 2 (Right: Student) -> Face 3 (Back: Billiards) -> Face 4 (Left: Chill)
+      const targetRotY = (currentP * Math.PI * 2.5) - 0.2;
+      const targetRotX = Math.sin(currentP * Math.PI * 2.5) * 0.12 + (mouseY * -0.12);
 
       currentX += (targetX + mouseX * 0.7 - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
@@ -305,9 +316,9 @@ export default function ThreeScrollExperience({ setActivePage }) {
       currentRotY += (targetRotY + mouseX * 0.25 - currentRotY) * 0.08;
       currentRotX += (targetRotX - currentRotX) * 0.08;
 
-      monolithGroup.position.set(currentX, currentY, currentZ);
-      monolithGroup.rotation.y = currentRotY;
-      monolithGroup.rotation.x = currentRotX;
+      cubeGroup.position.set(currentX, currentY, currentZ);
+      cubeGroup.rotation.y = currentRotY;
+      cubeGroup.rotation.x = currentRotX;
 
       ring1.rotation.z = time * 0.9;
       ring2.rotation.x = time * 0.7;
@@ -342,7 +353,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
 
-  // Determine active step index for top indicator buttons
   const getActiveIndex = () => {
     if (scrollProgress < 0.23) return 0;
     if (scrollProgress < 0.52) return 1;
@@ -375,8 +385,8 @@ export default function ThreeScrollExperience({ setActivePage }) {
           {/* Top Step Indicators Pill */}
           <div className="flex items-center justify-between pointer-events-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold backdrop-blur-md">
-              <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
-              <span>3D Scroll Interactive Showcase • Cuộn LÊN / XUỐNG để xoay khối 3D</span>
+              <Box className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Hộp Hình Vuông 3D 4 Mặt • Cuộn LÊN / XUỐNG để xoay ảnh</span>
             </div>
 
             {/* Quick Step Jump Tabs */}
@@ -403,18 +413,13 @@ export default function ThreeScrollExperience({ setActivePage }) {
               const StepIcon = st.icon;
               const dist = Math.abs(scrollProgress - st.center);
 
-              // Strictly bounded visibility window:
-              // Only visible when dist < halfWidth (0.09)
-              // Outside this window, opacity is strictly 0 -> GUARANTEES ZERO 2-CARD OVERLAP!
+              // Strictly bounded visibility window
               if (dist >= st.halfWidth) {
                 return null;
               }
 
-              // Smooth cosine drop from 1.0 at center to 0.0 at edge
               const normDist = dist / st.halfWidth; // 0 at center, 1 at boundary
               const opacity = Math.cos(normDist * (Math.PI / 2));
-              
-              // Continuous vertical translation
               const translateY = (scrollProgress - st.center) * -120;
 
               return (
@@ -431,14 +436,14 @@ export default function ThreeScrollExperience({ setActivePage }) {
                 >
                   <div className="w-full max-w-lg glass-panel-glow rounded-3xl p-6 md:p-8 border border-cyan-500/40 shadow-2xl backdrop-blur-xl">
                     
-                    {/* Step badge */}
-                    <div className="flex items-center justify-between mb-4">
+                    {/* Step badge & 3D face label */}
+                    <div className="flex items-center justify-between mb-3">
                       <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono font-bold">
                         <StepIcon className="w-3.5 h-3.5" />
                         <span>0{st.step} • {st.badge}</span>
                       </div>
-                      <span className="text-xs font-mono text-cyan-400 font-bold">
-                        {Math.round(scrollProgress * 100)}%
+                      <span className="text-[11px] font-mono text-amber-400 font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30">
+                        {st.faceLabel}
                       </span>
                     </div>
 
@@ -534,7 +539,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
           <div className="w-full flex items-center justify-between gap-4 pointer-events-auto">
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
               <ChevronDown className="w-4 h-4 text-cyan-400 animate-bounce" />
-              <span>Cuộn LÊN hoặc XUỐNG để xoay khối 3D 360°</span>
+              <span>Hộp 3D hiển thị ảnh ở mọi góc quay 360°</span>
             </div>
 
             <div className="flex-1 max-w-xs h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">

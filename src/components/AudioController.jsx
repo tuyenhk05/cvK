@@ -4,9 +4,12 @@ import { Volume2, VolumeX, Play, Pause, Music, Sparkles } from 'lucide-react';
 export default function AudioController() {
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.45);
+  const [volume, setVolume] = useState(() => {
+    const saved = localStorage.getItem('audio_volume');
+    return saved ? parseFloat(saved) : 0.5;
+  });
   const [isMuted, setIsMuted] = useState(false);
-  const [isAutoplayBlocked, setIsAutoplayBlocked] = useState(false);
+  const [needsUserGesture, setNeedsUserGesture] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
@@ -15,63 +18,76 @@ export default function AudioController() {
 
     audio.volume = volume;
 
-    // Attempt direct autoplay
-    const attemptPlay = () => {
-      audio.play()
-        .then(() => {
+    // 1. First attempt: Direct unmuted play
+    const startAudio = async () => {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+        setNeedsUserGesture(false);
+      } catch (err) {
+        console.log('Browser blocked unmuted autoplay, starting muted fallback + gesture unlock:', err.name);
+        setNeedsUserGesture(true);
+
+        // 2. Fallback: Start muted playback immediately (browsers always permit muted autoplay!)
+        audio.muted = true;
+        try {
+          await audio.play();
           setIsPlaying(true);
-          setIsAutoplayBlocked(false);
-        })
-        .catch(() => {
-          // Blocked by browser autoplay security policy
-          setIsAutoplayBlocked(true);
-          setIsPlaying(false);
-        });
-    };
+        } catch (e) {
+          // If even muted is blocked, we wait for gesture
+        }
 
-    attemptPlay();
+        // 3. Setup instant unlock on first gesture (wheel, scroll, click, touch, keydown)
+        const unlockSound = () => {
+          if (!audio) return;
+          audio.muted = false;
+          audio.volume = volume;
+          audio.play()
+            .then(() => {
+              setIsPlaying(true);
+              setNeedsUserGesture(false);
+              setIsMuted(false);
+            })
+            .catch((e) => console.log('Unlock retry:', e));
 
-    // Unlock audio on first user gesture
-    const unlockAudio = () => {
-      if (audio.paused) {
-        audio.play()
-          .then(() => {
-            setIsPlaying(true);
-            setIsAutoplayBlocked(false);
-          })
-          .catch((err) => console.log('Autoplay unlock retry:', err));
+          cleanupListeners();
+        };
+
+        const cleanupListeners = () => {
+          window.removeEventListener('click', unlockSound);
+          window.removeEventListener('pointerdown', unlockSound);
+          window.removeEventListener('wheel', unlockSound);
+          window.removeEventListener('scroll', unlockSound);
+          window.removeEventListener('keydown', unlockSound);
+          window.removeEventListener('touchstart', unlockSound);
+        };
+
+        window.addEventListener('click', unlockSound, { once: true });
+        window.addEventListener('pointerdown', unlockSound, { once: true });
+        window.addEventListener('wheel', unlockSound, { once: true });
+        window.addEventListener('scroll', unlockSound, { once: true });
+        window.addEventListener('keydown', unlockSound, { once: true });
+        window.addEventListener('touchstart', unlockSound, { once: true });
       }
-      // Remove listeners once unlocked
-      window.removeEventListener('click', unlockAudio);
-      window.removeEventListener('scroll', unlockAudio);
-      window.removeEventListener('touchstart', unlockAudio);
-      window.removeEventListener('keydown', unlockAudio);
     };
 
-    window.addEventListener('click', unlockAudio, { once: true });
-    window.addEventListener('scroll', unlockAudio, { once: true });
-    window.addEventListener('touchstart', unlockAudio, { once: true });
-    window.addEventListener('keydown', unlockAudio, { once: true });
-
-    return () => {
-      window.removeEventListener('click', unlockAudio);
-      window.removeEventListener('scroll', unlockAudio);
-      window.removeEventListener('touchstart', unlockAudio);
-      window.removeEventListener('keydown', unlockAudio);
-    };
-  }, []);
+    startAudio();
+  }, [volume]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) {
+    if (isPlaying && !audio.paused && !audio.muted) {
       audio.pause();
       setIsPlaying(false);
     } else {
+      audio.muted = false;
+      audio.volume = volume;
       audio.play().then(() => {
         setIsPlaying(true);
-        setIsAutoplayBlocked(false);
+        setNeedsUserGesture(false);
+        setIsMuted(false);
       });
     }
   };
@@ -79,6 +95,7 @@ export default function AudioController() {
   const handleVolumeChange = (e) => {
     const newVol = parseFloat(e.target.value);
     setVolume(newVol);
+    localStorage.setItem('audio_volume', newVol.toString());
     if (audioRef.current) {
       audioRef.current.volume = newVol;
     }
@@ -89,9 +106,12 @@ export default function AudioController() {
   const toggleMute = () => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (isMuted) {
+    if (isMuted || audio.muted) {
       audio.muted = false;
       setIsMuted(false);
+      if (audio.paused) {
+        audio.play().then(() => setIsPlaying(true));
+      }
     } else {
       audio.muted = true;
       setIsMuted(true);
@@ -109,26 +129,27 @@ export default function AudioController() {
 
       {/* Floating Audio Controller */}
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 pointer-events-auto">
-        {/* Friendly Autoplay prompt toast if blocked by browser policy */}
-        {isAutoplayBlocked && (
+        
+        {/* Pulsating Toast Banner if Browser requires gesture */}
+        {needsUserGesture && (
           <button
             onClick={togglePlay}
-            className="animate-bounce flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs shadow-2xl border border-cyan-300 shadow-cyan-500/40 hover:scale-105 transition-transform"
+            className="animate-bounce flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500 text-slate-950 font-black text-xs shadow-2xl border-2 border-white/60 shadow-cyan-500/50 hover:scale-105 transition-all"
           >
-            <Sparkles className="w-4 h-4 animate-spin-slow" />
-            <span>Chạm để bật nhạc nền 🎵</span>
+            <Sparkles className="w-4 h-4 animate-spin-slow text-slate-950" />
+            <span>🎵 Nhấn hoặc cuộn chuột để bật nhạc nền</span>
           </button>
         )}
 
-        {/* Main Floating Pill */}
+        {/* Main Floating Audio Pill */}
         <div className="glass-panel-glow rounded-2xl p-2 px-3 border border-cyan-500/40 shadow-2xl flex items-center gap-3 backdrop-blur-xl">
-          {/* Animated equalizer waves */}
+          {/* Animated sound waves */}
           <button
             onClick={togglePlay}
             className="flex items-center gap-1 h-7 px-1.5 rounded-lg hover:bg-white/10 transition-colors"
-            title={isPlaying ? "Tạm dừng" : "Phát nhạc"}
+            title={isPlaying && !isMuted ? "Tạm dừng" : "Phát nhạc"}
           >
-            {isPlaying ? (
+            {isPlaying && !isMuted ? (
               <div className="flex items-end gap-0.5 h-5 w-5 justify-center">
                 <span className="w-1 bg-cyan-400 rounded-full animate-wave-1"></span>
                 <span className="w-1 bg-cyan-300 rounded-full animate-wave-2"></span>
@@ -140,17 +161,17 @@ export default function AudioController() {
             )}
           </button>
 
-          {/* Track name & Play/Pause */}
+          {/* Track label */}
           <div 
             onClick={() => setIsExpanded(!isExpanded)} 
             className="cursor-pointer select-none text-left"
           >
             <div className="text-[11px] font-mono text-cyan-300 font-bold flex items-center gap-1.5">
               <span>BGM Portfolio</span>
-              <span className={`w-1.5 h-1.5 rounded-full ${isPlaying ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
+              <span className={`w-1.5 h-1.5 rounded-full ${isPlaying && !isMuted ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
             </div>
             <div className="text-[10px] text-slate-400 max-w-[110px] truncate">
-              {isPlaying ? 'Đang phát...' : 'Đã tạm dừng'}
+              {isPlaying && !isMuted ? 'Đang phát...' : 'Tạm dừng'}
             </div>
           </div>
 
@@ -158,9 +179,9 @@ export default function AudioController() {
           <button
             onClick={togglePlay}
             className="p-1.5 rounded-xl bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500 hover:text-slate-950 border border-cyan-500/30 transition-all"
-            aria-label={isPlaying ? "Dừng" : "Phát"}
+            aria-label={isPlaying && !isMuted ? "Dừng" : "Phát"}
           >
-            {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
+            {isPlaying && !isMuted ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 fill-current" />}
           </button>
 
           {/* Mute/Unmute */}
@@ -190,6 +211,7 @@ export default function AudioController() {
             </div>
           )}
         </div>
+
       </div>
     </>
   );
