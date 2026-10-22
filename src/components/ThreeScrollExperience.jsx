@@ -18,11 +18,14 @@ export default function ThreeScrollExperience({ setActivePage }) {
   const canvasMountRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Milestone data for the scroll sequence
+  // Exact timeline configuration: distinct non-overlapping milestones
+  // halfWidth = 0.09 ensures each card ONLY lives in [center - 0.09, center + 0.09]
+  // Buffer gap of ~0.10 between cards ensures ZERO 2-card overlap!
   const steps = [
     {
       step: 1,
-      center: 0.05,
+      center: 0.08,
+      halfWidth: 0.09,
       align: 'left',
       badge: "Kỹ Sư Cơ Điện Tử",
       title: "VÕ MINH KIỆT",
@@ -38,7 +41,8 @@ export default function ThreeScrollExperience({ setActivePage }) {
     },
     {
       step: 2,
-      center: 0.36,
+      center: 0.38,
+      halfWidth: 0.09,
       align: 'right',
       badge: "Học Vấn Trọng Tâm",
       title: "Đại Học Lạc Hồng (LHU)",
@@ -54,7 +58,8 @@ export default function ThreeScrollExperience({ setActivePage }) {
     },
     {
       step: 3,
-      center: 0.68,
+      center: 0.66,
+      halfWidth: 0.09,
       align: 'left',
       badge: "Chứng Chỉ Quốc Tế",
       title: "SolidWorks CSWA Quốc Tế",
@@ -70,7 +75,8 @@ export default function ThreeScrollExperience({ setActivePage }) {
     },
     {
       step: 4,
-      center: 0.95,
+      center: 0.92,
+      halfWidth: 0.09,
       align: 'right',
       badge: "Kinh Nghiệm Thực Chiến",
       title: "Thực Tập Brother Sài Gòn",
@@ -86,7 +92,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     }
   ];
 
-  // Track scroll position continuously
+  // Continuous scroll tracking
   useEffect(() => {
     let ticking = false;
 
@@ -119,7 +125,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
     let width = mount.clientWidth || window.innerWidth;
     let height = mount.clientHeight || window.innerHeight;
 
-    // Scene, Camera, Renderer
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     camera.position.set(0, 0, 24);
@@ -155,12 +160,10 @@ export default function ThreeScrollExperience({ setActivePage }) {
     const blockDepth = 1.0;
     const blockGeo = new THREE.BoxGeometry(blockWidth, blockHeight, blockDepth);
 
-    // Texture Loader for Kiệt's Portrait
     const textureLoader = new THREE.TextureLoader();
     const portraitTex = textureLoader.load('./images/avatar_night.jpg');
     portraitTex.colorSpace = THREE.SRGBColorSpace;
 
-    // Multi-Material for Box: [right, left, top, bottom, front, back]
     const metallicSideMat = new THREE.MeshStandardMaterial({
       color: 0x0f172a,
       metalness: 0.92,
@@ -259,7 +262,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
     };
     window.addEventListener('mousemove', onMouseMove);
 
-    // Resize handler
     const onResize = () => {
       if (!canvasMountRef.current) return;
       width = canvasMountRef.current.clientWidth || window.innerWidth;
@@ -274,7 +276,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
     let animId;
     const clock = new THREE.Clock();
 
-    // Damped values
     let currentX = 0;
     let currentY = 0;
     let currentZ = 0;
@@ -287,29 +288,17 @@ export default function ThreeScrollExperience({ setActivePage }) {
       const time = clock.getElapsedTime();
       const isMobile = window.innerWidth < 768;
 
-      // Read target scroll progress from ref
       const targetP = parseFloat(containerRef.current?.getAttribute('data-progress') || '0');
-      // Smooth interpolation of scroll progress (creates buttery momentum in BOTH directions)
       currentP += (targetP - currentP) * 0.085;
 
-      // CONTINUOUS FLUID 3D MATH CURVES (No if-else snapping!)
-      // X position weaves smoothly from +4.5 to -4.5 to +4.5 as you scroll down and reverses when you scroll up!
-      const targetX = isMobile ? 0 : Math.cos(currentP * Math.PI * 3.2) * 4.6;
-      
-      // Y position floats gently with scroll and breathing time
-      const targetY = Math.sin(currentP * Math.PI * 4) * 0.4 + Math.sin(time * 1.5) * 0.18;
-      
-      // Z position brings model closer in milestones
+      // CONTINUOUS FLUID 3D MATH CURVES
+      // Seamlessly alternates between +4.6 (Right) and -4.6 (Left) matching card sides
+      const targetX = isMobile ? 0 : Math.cos(currentP * Math.PI * 3.3) * 4.6;
+      const targetY = Math.sin(currentP * Math.PI * 4) * 0.35 + Math.sin(time * 1.5) * 0.16;
       const targetZ = Math.sin(currentP * Math.PI) * 1.5;
-
-      // Y Rotation spins continuously through 3D angles showing physical thickness on sides
-      // At p=0: facing front; as p increases: turns left, turns right, revolves in 3D
       const targetRotY = (currentP * Math.PI * 2.8) - 0.25;
-
-      // X Rotation subtle tilting
       const targetRotX = Math.sin(currentP * Math.PI * 3) * 0.14 + (mouseY * -0.15);
 
-      // Smooth damping interpolation (lerp)
       currentX += (targetX + mouseX * 0.7 - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
       currentZ += (targetZ - currentZ) * 0.08;
@@ -320,7 +309,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
       monolithGroup.rotation.y = currentRotY;
       monolithGroup.rotation.x = currentRotX;
 
-      // Continuous mechatronic rotation of rings
       ring1.rotation.z = time * 0.9;
       ring2.rotation.x = time * 0.7;
       particleField.rotation.y = time * 0.04;
@@ -341,7 +329,6 @@ export default function ThreeScrollExperience({ setActivePage }) {
     };
   }, []);
 
-  // Update data attribute for animation loop
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.setAttribute('data-progress', scrollProgress.toString());
@@ -354,6 +341,15 @@ export default function ThreeScrollExperience({ setActivePage }) {
     const targetY = containerRef.current.offsetTop + targetCenter * totalHeight + 10;
     window.scrollTo({ top: targetY, behavior: 'smooth' });
   };
+
+  // Determine active step index for top indicator buttons
+  const getActiveIndex = () => {
+    if (scrollProgress < 0.23) return 0;
+    if (scrollProgress < 0.52) return 1;
+    if (scrollProgress < 0.79) return 2;
+    return 3;
+  };
+  const activeIdx = getActiveIndex();
 
   return (
     <div 
@@ -374,60 +370,60 @@ export default function ThreeScrollExperience({ setActivePage }) {
         <div className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-amber-500/10 rounded-full blur-[130px] pointer-events-none" />
 
         {/* Foreground Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-between py-20 pointer-events-none">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-between pt-24 pb-16 pointer-events-none">
           
           {/* Top Step Indicators Pill */}
           <div className="flex items-center justify-between pointer-events-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
-              <span>3D Scroll Interactive Showcase • Cuộn LÊN / XUỐNG để xoay mô hình</span>
+              <span>3D Scroll Interactive Showcase • Cuộn LÊN / XUỐNG để xoay khối 3D</span>
             </div>
 
             {/* Quick Step Jump Tabs */}
             <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-xl glass-panel border border-cyan-500/30">
-              {steps.map((st, i) => {
-                const isActive = Math.abs(scrollProgress - st.center) < 0.18;
-                return (
-                  <button
-                    key={st.step}
-                    onClick={() => scrollToStep(st.center)}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
-                      isActive
-                        ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30 scale-105'
-                        : 'text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    0{st.step}
-                  </button>
-                );
-              })}
+              {steps.map((st, i) => (
+                <button
+                  key={st.step}
+                  onClick={() => scrollToStep(st.center)}
+                  className={`px-3 py-1 rounded-lg text-xs font-mono font-bold transition-all ${
+                    activeIdx === i
+                      ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/30 scale-105'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  0{st.step}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Bi-directional Fluid Story Cards (Seamlessly fades in & out both scrolling DOWN and UP!) */}
+          {/* Bi-directional Non-Overlapping Story Cards */}
           <div className="relative w-full h-[450px] pointer-events-none">
             {steps.map((st) => {
               const StepIcon = st.icon;
-              // Calculate continuous distance from current scroll position to this card's center
               const dist = Math.abs(scrollProgress - st.center);
-              
-              // Smooth bell-curve visibility window
-              const rawVisibility = Math.max(0, 1 - dist * 3.5);
-              const opacity = Math.min(1, Math.pow(rawVisibility, 1.2));
-              
-              // Continuous vertical translation: slides in from bottom when scrolling down, slides down in reverse when scrolling up
-              const translateY = (scrollProgress - st.center) * -90;
-              const isVisible = opacity > 0.01;
 
-              if (!isVisible) return null;
+              // Strictly bounded visibility window:
+              // Only visible when dist < halfWidth (0.09)
+              // Outside this window, opacity is strictly 0 -> GUARANTEES ZERO 2-CARD OVERLAP!
+              if (dist >= st.halfWidth) {
+                return null;
+              }
+
+              // Smooth cosine drop from 1.0 at center to 0.0 at edge
+              const normDist = dist / st.halfWidth; // 0 at center, 1 at boundary
+              const opacity = Math.cos(normDist * (Math.PI / 2));
+              
+              // Continuous vertical translation
+              const translateY = (scrollProgress - st.center) * -120;
 
               return (
                 <div
                   key={st.step}
                   style={{
                     opacity: opacity,
-                    transform: `translateY(${translateY}px) scale(${0.92 + opacity * 0.08})`,
-                    pointerEvents: opacity > 0.6 ? 'auto' : 'none'
+                    transform: `translateY(${translateY}px) scale(${0.94 + opacity * 0.06})`,
+                    pointerEvents: opacity > 0.5 ? 'auto' : 'none'
                   }}
                   className={`absolute inset-0 flex items-center ${
                     st.align === 'left' ? 'justify-start' : 'justify-end'
@@ -524,7 +520,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
                       )}
 
                       <span className="text-[11px] font-mono text-slate-400 ml-auto">
-                        {st.step < 4 ? 'Cuộn xuống ▾' : 'Cuộn lên ▴'}
+                        {st.step < 4 ? 'Cuộn tiếp ▾' : 'Cuộn lên ▴'}
                       </span>
                     </div>
 

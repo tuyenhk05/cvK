@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { 
   FileText, 
@@ -8,12 +8,37 @@ import {
   GraduationCap, 
   Cpu, 
   PhoneCall, 
-  Download,
-  Sparkles
+  Download
 } from 'lucide-react';
 
 export default function Navbar({ activePage, setActivePage }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  // Auto-hide navbar when scrolling DOWN, reveal when scrolling UP
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show at top of page
+      if (currentScrollY < 60) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down -> hide navbar
+        setIsVisible(false);
+        setMobileMenuOpen(false); // Close mobile drawer if open
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up -> show navbar
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navItems = [
     { id: 'home', label: 'Tổng Quan', icon: Home },
@@ -29,13 +54,17 @@ export default function Navbar({ activePage, setActivePage }) {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-cyan-500/20 backdrop-blur-xl">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-40 w-full glass-panel border-b border-cyan-500/20 backdrop-blur-xl transition-transform duration-300 ease-in-out ${
+        isVisible ? 'translate-y-0 shadow-lg shadow-black/20' : '-translate-y-full pointer-events-none'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
         {/* Brand / Logo */}
         <div 
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-3.5 cursor-pointer group"
+          className="flex items-center gap-3.5 cursor-pointer group pointer-events-auto"
         >
           <div className="relative">
             <img 
@@ -64,7 +93,7 @@ export default function Navbar({ activePage, setActivePage }) {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/60 border border-cyan-500/20">
+        <nav className="hidden md:flex items-center gap-1.5 p-1.5 rounded-2xl bg-slate-900/60 border border-cyan-500/20 pointer-events-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activePage === item.id;
@@ -91,7 +120,7 @@ export default function Navbar({ activePage, setActivePage }) {
         </nav>
 
         {/* Action Button: Quick CV Download / Call */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 pointer-events-auto">
           <a
             href={PERSONAL_INFO.socials.phone}
             className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-700 transition-colors"
@@ -110,7 +139,7 @@ export default function Navbar({ activePage, setActivePage }) {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex md:hidden items-center gap-2 pointer-events-auto">
           <button
             onClick={() => handleNavClick('cv')}
             className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-cyan-500 text-slate-950 text-xs font-bold"
@@ -129,8 +158,8 @@ export default function Navbar({ activePage, setActivePage }) {
       </div>
 
       {/* Mobile Drawer Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden glass-panel-glow border-b border-cyan-500/30 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4">
+      {mobileMenuOpen && isVisible && (
+        <div className="md:hidden glass-panel-glow border-b border-cyan-500/30 px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-4 pointer-events-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activePage === item.id;
