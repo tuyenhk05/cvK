@@ -121,7 +121,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Three.js 3D Cyber Cube with 4 Authentic Faces
+  // Three.js 3D Cyber Cube: Combines 360° Rotation + Dynamic Vertical Gliding Swoop!
   useEffect(() => {
     if (!canvasMountRef.current) return;
     const mount = canvasMountRef.current;
@@ -138,10 +138,10 @@ export default function ThreeScrollExperience({ setActivePage }) {
     mount.appendChild(renderer.domElement);
 
     // Dynamic Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.45);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0x00f2fe, 4.0);
+    const keyLight = new THREE.DirectionalLight(0x00f2fe, 4.2);
     keyLight.position.set(15, 18, 16);
     scene.add(keyLight);
 
@@ -157,11 +157,11 @@ export default function ThreeScrollExperience({ setActivePage }) {
     const cubeGroup = new THREE.Group();
     scene.add(cubeGroup);
 
-    // 1. Equal 3D Cube Geometry (Hộp hình vuông 3D: 8.0 x 8.0 x 8.0)
+    // 1. Equal 3D Cube Geometry (8.0 x 8.0 x 8.0)
     const cubeSize = 8.0;
     const cubeGeo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
-    // Texture Loader for 4 Distinct Photos of Kiệt
+    // Texture Loader for 4 Distinct Authentic Photos of Kiệt
     const textureLoader = new THREE.TextureLoader();
 
     // Face 4 (+Z Front): Hero Night Portrait
@@ -280,7 +280,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     };
     window.addEventListener('resize', onResize);
 
-    // Animation Loop: Cube spins continuously revealing all 4 faces
+    // Animation Loop: SIMULTANEOUS 3D ROTATION + VERTICAL GLIDE SWOOP (LƯỚT LÊN & XUỐNG)
     let animId;
     const clock = new THREE.Clock();
 
@@ -290,6 +290,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
     let currentRotY = 0;
     let currentRotX = 0;
     let currentP = 0;
+    let prevP = 0;
 
     const renderLoop = () => {
       animId = requestAnimationFrame(renderLoop);
@@ -297,19 +298,38 @@ export default function ThreeScrollExperience({ setActivePage }) {
       const isMobile = window.innerWidth < 768;
 
       const targetP = parseFloat(containerRef.current?.getAttribute('data-progress') || '0');
+      
+      // Calculate scroll speed/velocity to apply aerodynamic momentum tilt!
+      const scrollVelocity = (targetP - prevP);
+      prevP += (targetP - prevP) * 0.1;
+
+      // Smooth interpolation of scroll progress (creates buttery momentum in BOTH directions)
       currentP += (targetP - currentP) * 0.085;
 
-      // CONTINUOUS FLUID 3D MATH CURVES
-      // Position weaves between right (+4.5) and left (-4.5)
+      // 1. VERTICAL GLIDE SWOOP (Hiệu ứng LƯỚT XUỐNG / LƯỚT LÊN):
+      // As user scrolls down (p: 0 -> 1): Cube glides down from +3.2 (high) to -3.2 (low)
+      // As user scrolls up (p: 1 -> 0): Cube glides smoothly back up from -3.2 to +3.2!
+      const verticalGlide = 3.2 - (currentP * 6.4);
+      // Plus subtle levitation floating wave
+      const floatWave = Math.sin(time * 1.6) * 0.18;
+      const targetY = verticalGlide + floatWave;
+
+      // 2. HORIZONTAL WEAVING (Dạt trái / dạt phải để nhường chỗ cho thẻ thông tin):
       const targetX = isMobile ? 0 : Math.cos(currentP * Math.PI * 3.3) * 4.6;
-      const targetY = Math.sin(currentP * Math.PI * 4) * 0.35 + Math.sin(time * 1.5) * 0.16;
-      const targetZ = Math.sin(currentP * Math.PI) * 1.5;
 
-      // Rotation Y smoothly spans 360 degrees (0 to 2*PI*1.5), so all 4 cube faces rotate through!
-      // Face 1 (Front: Hero) -> Face 2 (Right: Student) -> Face 3 (Back: Billiards) -> Face 4 (Left: Chill)
-      const targetRotY = (currentP * Math.PI * 2.5) - 0.2;
-      const targetRotX = Math.sin(currentP * Math.PI * 2.5) * 0.12 + (mouseY * -0.12);
+      // 3. DEPTH ZOOM (Hút gần và xa):
+      const targetZ = Math.sin(currentP * Math.PI) * 1.6;
 
+      // 4. CONTINUOUS 360° ROTATION (Xoay tròn 4 mặt ảnh):
+      const targetRotY = (currentP * Math.PI * 2.6) - 0.2;
+
+      // 5. AERODYNAMIC INERTIAL PITCH TILT (Nghiêng khí động học khi lướt xuống/lên):
+      // When scrolling down fast (scrollVelocity > 0), cube pitches forward!
+      // When scrolling up fast (scrollVelocity < 0), cube pitches backward!
+      const pitchTilt = scrollVelocity * 3.5;
+      const targetRotX = Math.sin(currentP * Math.PI * 2.5) * 0.12 + pitchTilt + (mouseY * -0.12);
+
+      // Smooth damping interpolation (lerp)
       currentX += (targetX + mouseX * 0.7 - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
       currentZ += (targetZ - currentZ) * 0.08;
@@ -320,6 +340,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
       cubeGroup.rotation.y = currentRotY;
       cubeGroup.rotation.x = currentRotX;
 
+      // Orbiting mechatronic rings spin continuously
       ring1.rotation.z = time * 0.9;
       ring2.rotation.x = time * 0.7;
       particleField.rotation.y = time * 0.04;
@@ -386,7 +407,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
           <div className="flex items-center justify-between pointer-events-auto">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold backdrop-blur-md">
               <Box className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Hộp Hình Vuông 3D 4 Mặt • Cuộn LÊN / XUỐNG để xoay ảnh</span>
+              <span>Hộp 3D Vừa Lướt Lên/Xuống Vừa Xoay 360°</span>
             </div>
 
             {/* Quick Step Jump Tabs */}
@@ -413,12 +434,11 @@ export default function ThreeScrollExperience({ setActivePage }) {
               const StepIcon = st.icon;
               const dist = Math.abs(scrollProgress - st.center);
 
-              // Strictly bounded visibility window
               if (dist >= st.halfWidth) {
                 return null;
               }
 
-              const normDist = dist / st.halfWidth; // 0 at center, 1 at boundary
+              const normDist = dist / st.halfWidth;
               const opacity = Math.cos(normDist * (Math.PI / 2));
               const translateY = (scrollProgress - st.center) * -120;
 
@@ -539,7 +559,7 @@ export default function ThreeScrollExperience({ setActivePage }) {
           <div className="w-full flex items-center justify-between gap-4 pointer-events-auto">
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
               <ChevronDown className="w-4 h-4 text-cyan-400 animate-bounce" />
-              <span>Hộp 3D hiển thị ảnh ở mọi góc quay 360°</span>
+              <span>Khối 3D lướt dọc theo màn hình và xoay tương tác</span>
             </div>
 
             <div className="flex-1 max-w-xs h-1.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
