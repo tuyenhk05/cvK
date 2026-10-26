@@ -1,83 +1,52 @@
-# Website Portfolio & CV Tương Tác 3D - Võ Minh Kiệt
-> **Ngành:** Kỹ Thuật Cơ Điện Tử (Mechatronics Engineering) • Đại Học Lạc Hồng (LHU)  
-> **Chuyên môn:** SolidWorks (Chứng chỉ CSWA), Hệ thống nhúng STM32, Quản lý sản xuất 3S-5S (Brother Sài Gòn).
+# Website Hồ Sơ Năng Lực & CV Điện Tử - Võ Minh Kiệt
+> **Chuyên ngành:** Kỹ Thuật Cơ Điện Tử (Mechatronics Engineering) • Trường Đại Học Lạc Hồng (LHU)  
+> **Chuyên môn:** Thiết kế 3D SolidWorks (Chứng chỉ CSWA), Hệ thống vi điều khiển STM32, Tiêu chuẩn quản lý sản xuất 3S - 5S (Brother Sài Gòn).
 
 ---
 
-## 🚀 Hướng Dẫn Public Website Lên GitHub (Miễn Phí 100%)
+## 🌟 Phong Cách Thiết Kế & Chuẩn Mực Kỹ Sư
 
-Dự án đã được cấu hình sẵn **`base: './'`**, thư viện **`gh-pages`** và hệ thống CI/CD tự động **GitHub Actions** (`.github/workflows/deploy.yml`). Website sẽ tự động chạy công khai trên GitHub Pages với tên miền dạng:  
-`https://<ten-tai-khoan-github>.github.io/<ten-repository>/`
-
-### Cách 1: Sử dụng file chạy tự động (Dễ nhất)
-1. Truy cập [https://github.com/new](https://github.com/new) và tạo 1 repository mới (ví dụ đặt tên: `cv-vo-minh-kiet`, chọn chế độ **Public**, không cần tick chọn Add README).
-2. Copy đường link repository vừa tạo (dạng: `https://github.com/username/cv-vo-minh-kiet.git`).
-3. Nhấp đúp vào file: 👉 **`push_to_github.bat`**
-4. Dán link repository vào cửa sổ và nhấn **Enter**.
-5. Vào GitHub repository của bạn:
-   - Nhấp vào **Settings** -> Mục **Pages** (ở menu bên trái).
-   - Tại mục **Build and deployment** -> **Source**: Chọn **GitHub Actions**.
-   - Chờ khoảng 1-2 phút, GitHub sẽ tự động build và xuất hiện link website công khai!
+Hồ sơ năng lực được định hình theo văn phong **lịch sự, chững chạc và sang trọng**, tối ưu hóa trải nghiệm đọc cho Quý Nhà tuyển dụng và Quý Đối tác:
+- **Tone màu sang trọng**: Dark Slate / Titanium kết hợp ánh sắc Electric Cyan & Gold tinh tế.
+- **Hiệu ứng Scroll Reveal tối giản**: Các hạng mục xuất hiện mượt mà theo phương ngang (left/right) và phương dọc (top/up), loại bỏ mọi hiệu ứng âm thanh hoặc chuyển động rườm rà.
+- **Tập trung vào giá trị cốt lõi**: Năng lực kỹ thuật thực tế, chứng chỉ quốc tế Dassault Systèmes CSWA, đồ án trưởng nhóm và kinh nghiệm tại nhà máy Brother Sài Gòn.
 
 ---
 
-### Cách 2: Triển khai bằng dòng lệnh thủ công
-```bash
-# 1. Thêm link remote GitHub của bạn:
-git remote add origin https://github.com/<tai-khoan-cua-ban>/<ten-repo>.git
-
-# 2. Đẩy code lên nhánh main:
-git branch -M main
-git push -u origin main
-```
-Sau đó vào **Settings** -> **Pages** trên GitHub -> chọn Source là **GitHub Actions**.
-
----
-
-### Cách 3: Triển khai nhanh qua nhánh `gh-pages`
-```bash
-npm run deploy
-```
-Lệnh này sẽ tự động chạy `npm run build` và đẩy thẳng thư mục `dist` lên nhánh `gh-pages` của GitHub.
-
----
-
-## 🌟 Tổng Quan Các Trang Của Website
+## 📂 Cấu Trúc Các Trang Chuyên Môn
 
 ### 1. Trang Chủ (Tổng Quan) - `#/home`
-- **Hero Section Công Nghệ Cao**: Không gian 3D tương tác với các hạt điện tử (particle constellation) và khối wireframe cơ điện tử xoay theo chuột.
-- **Hero Avatar & Nhận Diện Cá Nhân**: Tôn vinh chân dung Võ Minh Kiệt cùng phong cách thiết kế Cyber Mechatronics (sắc xanh Electric Cyan, Blue & Amber kim loại).
-- **Mô Hình 3D Album Cuộn Ảnh (Three.js 3D Photo Scroll Showcase)**:
-  - Tích hợp toàn bộ hình ảnh đời thường, bạn bè (chơi bida), chân dung đêm và ảnh hồ sơ vào một **vòng xoay không gian 3D (3D Cylindrical Carousel)** bằng Three.js.
-  - Hỗ trợ cuộn chuột (scroll), kéo/thả chuột hoặc vuốt chạm để xoay mô hình 3D trong không gian thực.
-  - Nhấp vào bất kỳ ảnh 3D nào để mở cửa sổ phóng to (Lightbox).
+- **Executive Hero Section**: Lời chào trang trọng, giới thiệu tóm tắt hồ sơ năng lực và các nút điều hướng nhanh.
+- **Chỉ Số Năng Lực Cốt Lõi (Core Stats)**: Trình bày cô đọng thời gian đào tạo, chứng chỉ CSWA, kinh nghiệm thực tập Brother và chuẩn 3S-5S.
+- **Các Cột Mốc Năng Lực Trọng Tâm**: Thẻ thông tin song hành với hiệu ứng trượt mượt mà (scroll entrance).
+- **Bộ Sưu Tập Hình Ảnh Chân Dung & Hoạt Động**: Trình bày trang nhã với chế độ xem phóng to (Lightbox).
+- **Năng Lực Kỹ Thuật Cơ Điện Tử**: Phân nhóm kỹ năng CAD/CAM, Hệ thống nhúng và Quản trị sản xuất.
 
-### 2. Quá Trình Học Tập & Phát Triển - `#/journey`
-- **Lộ trình tương tác (Interactive Timeline Roadmap)**: Đại học Lạc Hồng (2023 - 2027), Dự án Khóa Cửa Thông Minh, Thực tập Brother Sài Gòn Amata.
-- **Mô phỏng cơ cấu cơ khí 3D (ThreeGearSimulator)**: Bộ truyền bánh răng ăn khớp 3D tương tác trực tiếp bằng Three.js (xoay 360°, đổi tốc độ, bật/tắt khung dây CAD).
-- **Phòng Trưng Bày Chứng Chỉ (Certificates Showroom)**: CSWA SolidWorks, Kỹ năng mềm 3S-5S, Tiếng Anh đầu ra, Tiếng Trung HK2.
+### 2. Quá Trình Học Tập & Rèn Luyện - `#/journey`
+- **Mô Hình Năng Lực Cơ Điện Tử Tích Hợp**: Tổng quan về sự kết hợp giữa Cơ khí chính xác và Hệ thống điều khiển nhúng.
+- **Lộ Trình Các Cột Mốc Quan Trọng (Timeline Roadmap)**: Các giai đoạn từ giảng đường LHU đến nhà máy Brother Amata.
+- **Chứng Chỉ & Chuẩn Đầu Ra**: Chứng chỉ CSWA quốc tế, kỹ năng mềm 3S-5S, Tiếng Anh đầu ra và Tiếng Trung.
 
-### 3. Dự Án & Năng Lực Thực Chiến - `#/projects`
-- **Dự Án Khóa Cửa Tự Động Thông Minh (STM32F103C8T6A)**: Vai trò Trưởng nhóm (Team Leader), mạch ARM Cortex-M3, thiết kế vỏ hộp cơ khí trên SolidWorks.
-- **Kinh Nghiệm Dây Chuyền Máy May Công Nghiệp Brother**: Vận hành và kiểm soát chất lượng không NG, phân tích 5 bước 3S-5S Nhật Bản.
+### 3. Dự Án & Năng Lực Thực Tiễn - `#/projects`
+- **Hệ Thống Khóa Cửa Tự Động Thông Minh**: Đồ án trưởng nhóm (Team Leader), vi điều khiển ARM STM32F103C8T6A, cơ cấu Solenoid và thiết kế vỏ cơ khí trên SolidWorks.
+- **Quy Trình Gia Công & Tiêu Chuẩn 3S-5S Brother**: Thực tập vận hành máy móc công nghiệp, tuân thủ nguyên tắc Zero NG.
+- **Bộ Hồ Sơ Bản Vẽ Chuẩn CSWA SolidWorks**: Mô hình hóa chi tiết máy 3D và xuất bản vẽ 2D tiêu chuẩn ISO/JIS.
 
-### 4. Trang Xem CV Thực Tế - `#/cv`
-- **Bản Gốc PDF**: Nhúng trực tiếp file `CV_Võ Minh Kiệt.pdf` độ nét cao với zoom phóng to/thu nhỏ.
-- **Bản Số Hóa Tương Tác**: Tái hiện nguyên mẫu CV gốc 2 cột (Trắng & Xanh đậm), hỗ trợ sao chép số điện thoại (`0389979163`) và email chỉ bằng 1 cú nhấp.
-- **Nút Thao Tác Nhanh**: Tải file PDF gốc, In CV, Gọi điện, Gửi Email, Kết nối Zalo.
-
----
-
-## 🎵 Hệ Thống Âm Thanh Nền Tự Động (Continuous Audio Player)
-
-- Nhúng trực tiếp file âm thanh `SaveTik.io_7635721427689164062.mp3`.
-- Tự động kích hoạt phát nhạc ngay khi vào trang hoặc khi có tương tác đầu tiên (chạm/cuộn/nhấp) theo chuẩn bảo mật của trình duyệt hiện đại.
-- **Phát nhạc không bị gián đoạn** khi người dùng chuyển qua lại giữa các trang.
-- Widget điều khiển nổi: Equalizer nhảy theo điệu nhạc, Play/Pause, Mute và chỉnh âm lượng.
+### 4. Xem CV Ứng Tuyển Chính Thức - `#/cv`
+- **Bản Gốc PDF**: Xem trực tiếp file PDF chính thức, hỗ trợ tải về hoặc in ấn.
+- **Bản Số Hóa Tương Tác**: Đối chiếu thông tin dễ dàng, hỗ trợ sao chép liên hệ bằng 1 chạm.
 
 ---
 
-## 💻 Chạy Thử Nghiệm Trên Máy Tính Local
+## 💻 Triển Khai & Kiểm Thử
 
-- **Cách nhanh**: Nhấp đúp vào file **`chay_website.bat`** (Mở tại `http://localhost:5173/`).
-- **Chạy bản Production Build tĩnh**: Nhấp đúp vào file **`chay_ban_build_dist.bat`** (Mở tại `http://localhost:8080/`).
+```bash
+# Cài đặt thư viện:
+npm install
+
+# Khởi chạy môi trường phát triển:
+npm run dev
+
+# Đóng gói sản phẩm (Output ra thư mục docs/ phục vụ GitHub Pages):
+npm run build
+```

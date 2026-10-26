@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hồ Sơ CV Trực Tuyến | Võ Minh Kiệt - Mechatronics</title>
+  <meta name="description" content="Xem trực tiếp bản CV gốc PDF và bản số hóa chuyên nghiệp của Võ Minh Kiệt - Kỹ sư Cơ Điện Tử ĐH Lạc Hồng.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/kiet_official.png">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/images/kiet_official.png" alt="Võ Minh Kiệt" class="brand-avatar">
+        <div>
+          <div class="brand-name">VÕ MINH KIỆT</div>
+          <div class="brand-sub">CƠ ĐIỆN TỬ • ĐH LẠC HỒNG</div>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link"><i data-lucide="home" style="width:16px;height:16px;"></i> Tổng Quan</a></li>
+          <li><a href="hanh-trinh.html" class="nav-link"><i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> Học Vấn & Chứng Chỉ</a></li>
+          <li><a href="du-an.html" class="nav-link"><i data-lucide="cpu" style="width:16px;height:16px;"></i> Dự Án & Thực Tập</a></li>
+          <li><a href="cv.html" class="nav-link active"><i data-lucide="file-text" style="width:16px;height:16px;"></i> Xem & Tải CV</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-toggle" aria-label="Menu">
+        <i data-lucide="menu" style="width:22px;height:22px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="section" style="padding-top:calc(var(--header-height) + 3rem);padding-bottom:2rem;text-align:center;">
+    <div class="container" style="max-width:800px;">
+      <div class="section-tag reveal-down"><i data-lucide="file-text" style="width:14px;height:14px;"></i> Hồ Sơ Ứng Tuyển Chính Thức</div>
+      <h1 class="hero-title reveal-down" style="font-size:2.8rem;">Hồ Sơ Năng Lực Kỹ Sư Võ Minh Kiệt</h1>
+      <p class="section-subtitle reveal-up">Xem trực tiếp bản CV định dạng PDF chính thức hoặc tải về máy phục vụ công tác xét tuyển.</p>
+    </div>
+  </section>
+
+  <!-- Actions Bar -->
+  <section style="padding-bottom:2rem;">
+    <div class="container">
+      <div class="luxury-card reveal-up" style="padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;">
+          <div style="font-size:0.9rem;font-weight:600;color:var(--text-primary);">
+            File gốc: <span style="font-family:var(--font-mono);color:var(--accent-cyan);">CV_Vo_Minh_Kiet.pdf</span>
+          </div>
+          <span style="font-size:0.8rem;color:var(--text-muted);font-family:var(--font-mono);">Dung lượng: ~420 KB</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <a href="assets/docs/CV_Vo_Minh_Kiet.pdf" download="CV_Vo_Minh_Kiet.pdf" class="btn-primary">
+            <i data-lucide="download" style="width:16px;height:16px;"></i>
+            <span>Tải Xuống Bản PDF</span>
+          </a>
+          <button onclick="window.print()" class="btn-secondary">
+            <i data-lucide="printer" style="width:16px;height:16px;"></i>
+            <span>In Bản CV</span>
+          </button>
+          <button onclick="copyText('minhkietvo047@gmail.com', this)" class="btn-secondary">
+            <i data-lucide="copy" style="width:16px;height:16px;"></i>
+            <span>Sao Chép Email</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PDF / Document Preview Container -->
+  <section class="section" style="padding-top:0.5rem;padding-bottom:5rem;">
+    <div class="container">
+      <div class="luxury-card reveal-up" style="padding:1rem;background:#050912;border-color:var(--border-glow);">
+        <div style="position:relative;width:100%;min-height:850px;border-radius:var(--radius-md);overflow:hidden;background:#0d1424;">
+          <object data="assets/docs/CV_Vo_Minh_Kiet.pdf" type="application/pdf" width="100%" height="850px">
+            <!-- Fallback image preview if browser PDF plugin is disabled -->
+            <div style="text-align:center;padding:2rem;">
+              <p style="margin-bottom:1.5rem;font-size:0.95rem;color:var(--text-secondary);">Trình duyệt không hỗ trợ xem trực tiếp PDF. Quý Nhà tuyển dụng có thể xem bản ảnh chụp phía dưới hoặc tải file gốc:</p>
+              <a href="assets/docs/CV_Vo_Minh_Kiet.pdf" download="CV_Vo_Minh_Kiet.pdf" class="btn-primary" style="margin-bottom:2rem;">
+                <i data-lucide="download" style="width:16px;height:16px;"></i>
+                <span>Tải File PDF Gốc Tại Đây</span>
+              </a>
+              <img src="assets/docs/cv_page_1.png" alt="CV Trang 1" style="max-width:900px;margin:0 auto;box-shadow:var(--shadow-card);border-radius:var(--radius-sm);">
+            </div>
+          </object>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer-nav">
+        <li><a href="index.html">Tổng Quan</a></li>
+        <li><a href="hanh-trinh.html">Học Vấn & Chứng Chỉ</a></li>
+        <li><a href="du-an.html">Dự Án & Thực Tập</a></li>
+        <li><a href="cv.html">Xem & Tải CV</a></li>
+      </ul>
+      <div class="footer-copy">
+        &copy; 2026 Võ Minh Kiệt • Kỹ Sư Cơ Điện Tử • Đại Học Lạc Hồng (LHU). All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/lucide.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

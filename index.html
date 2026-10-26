@@ -1,19 +1,316 @@
-<!doctype html>
-<html lang="vi" class="dark scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/jpeg" href="./images/avatar_night.jpg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Võ Minh Kiệt | Kỹ Sư Cơ Điện Tử - Portfolio & Interactive CV</title>
-    <meta name="description" content="Portfolio và Hồ sơ năng lực của Võ Minh Kiệt - Kỹ sư Cơ Điện Tử ĐH Lạc Hồng. Chuyên môn SolidWorks CSWA, Hệ thống nhúng STM32, Quản lý sản xuất 3S-5S." />
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#080d16] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden min-h-screen">
-    <div id="root"></div>
-    <script type="module" src="./src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Võ Minh Kiệt | Kỹ Sư Cơ Điện Tử • Mechatronics Engineer | ĐH Lạc Hồng</title>
+  <meta name="description" content="Hồ sơ năng lực kỹ thuật và CV chính thức của Võ Minh Kiệt - Sinh viên năm 4 ngành Kỹ thuật Cơ điện tử Trường Đại học Lạc Hồng. SolidWorks CSWA, STM32, Quản lý sản xuất 3S-5S Brother.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/png" href="assets/images/kiet_official.png">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/images/kiet_official.png" alt="Võ Minh Kiệt" class="brand-avatar">
+        <div>
+          <div class="brand-name">VÕ MINH KIỆT</div>
+          <div class="brand-sub">CƠ ĐIỆN TỬ • ĐH LẠC HỒNG</div>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link active"><i data-lucide="home" style="width:16px;height:16px;"></i> Tổng Quan</a></li>
+          <li><a href="hanh-trinh.html" class="nav-link"><i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> Học Vấn & Chứng Chỉ</a></li>
+          <li><a href="du-an.html" class="nav-link"><i data-lucide="cpu" style="width:16px;height:16px;"></i> Dự Án & Thực Tập</a></li>
+          <li><a href="cv.html" class="nav-link"><i data-lucide="file-text" style="width:16px;height:16px;"></i> Xem & Tải CV</a></li>
+        </ul>
+      </nav>
+
+      <button class="mobile-toggle" aria-label="Menu">
+        <i data-lucide="menu" style="width:22px;height:22px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- 1. Executive Hero Section -->
+  <section class="section section-hero">
+    <div class="container hero-grid">
+      <div class="hero-content reveal-left">
+        <div class="hero-tag">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--accent-emerald);display:inline-block;"></span>
+          <span>Hồ Sơ Năng Lực Kỹ Sư Cơ Điện Tử</span>
+        </div>
+
+        <h1 class="hero-title">VÕ MINH KIỆT</h1>
+        <div class="hero-role">Kỹ Sư Cơ Điện Tử (Mechatronics Engineer)</div>
+
+        <div class="hero-desc">
+          Kính chào Quý Nhà tuyển dụng và Quý Đối tác. Tôi là <strong>Võ Minh Kiệt</strong>, sinh viên năm 4 chuyên ngành Kỹ thuật Cơ điện tử tại <strong>Trường Đại học Lạc Hồng</strong>. Với nền tảng kiến thức chuyên môn vững chắc về mô hình hóa cơ khí 3D CAD trên SolidWorks (đạt chứng chỉ Quốc tế CSWA), kinh nghiệm lập trình vi điều khiển ARM Cortex-M3 (STM32) và thời gian thực tập chuyên nghiệp tại <strong>Tập đoàn Brother Sài Gòn</strong> theo chuẩn 3S-5S, tôi luôn cam kết tinh thần kỷ luật, sự chuẩn xác và thái độ cầu thị trong từng giải pháp kỹ thuật.
+        </div>
+
+        <div class="hero-actions">
+          <a href="cv.html" class="btn-primary">
+            <i data-lucide="file-text" style="width:18px;height:18px;"></i>
+            <span>Xem Trực Tuyến Bản CV</span>
+          </a>
+          <a href="du-an.html" class="btn-secondary">
+            <i data-lucide="cpu" style="width:18px;height:18px;"></i>
+            <span>Dự Án Đồ Án & Thực Tập</span>
+          </a>
+          <a href="tel:0389979163" class="btn-secondary">
+            <i data-lucide="phone-call" style="width:18px;height:18px;color:var(--accent-emerald);"></i>
+            <span>Liên Hệ: 0389 979 163</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-card reveal-right">
+        <img src="assets/images/kiet_official.png" alt="Chân dung Võ Minh Kiệt" class="hero-card-img">
+        <div class="hero-card-badge">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-family:var(--font-mono);font-size:0.85rem;font-weight:700;color:var(--accent-cyan);">Trường Đại Học Lạc Hồng</div>
+              <div style="font-size:0.75rem;color:var(--text-secondary);">Kỹ Thuật Cơ Điện Tử (Khóa 2023 - 2027)</div>
+            </div>
+            <span class="badge-tag" style="color:var(--accent-emerald);border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);">Tốt Nghiệp T5/2027</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Core Stats Bar -->
+  <section class="stats-section">
+    <div class="container stats-grid">
+      <div class="stat-card reveal-up">
+        <div class="stat-icon"><i data-lucide="graduation-cap" style="width:24px;height:24px;"></i></div>
+        <div>
+          <div class="stat-val">Năm 4</div>
+          <div class="stat-label">Đào tạo kỹ sư</div>
+          <div class="stat-sub">ĐH Lạc Hồng Cơ Điện Tử</div>
+        </div>
+      </div>
+
+      <div class="stat-card reveal-up">
+        <div class="stat-icon" style="color:var(--accent-gold);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);"><i data-lucide="award" style="width:24px;height:24px;"></i></div>
+        <div>
+          <div class="stat-val">CSWA</div>
+          <div class="stat-label">Chứng chỉ SolidWorks</div>
+          <div class="stat-sub">Dassault Systèmes Quốc tế</div>
+        </div>
+      </div>
+
+      <div class="stat-card reveal-up">
+        <div class="stat-icon" style="color:var(--accent-emerald);border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);"><i data-lucide="briefcase" style="width:24px;height:24px;"></i></div>
+        <div>
+          <div class="stat-val">Brother</div>
+          <div class="stat-label">Thực tập chuyên môn</div>
+          <div class="stat-sub">Tập đoàn Brother Sài Gòn</div>
+        </div>
+      </div>
+
+      <div class="stat-card reveal-up">
+        <div class="stat-icon" style="color:var(--accent-purple);border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.1);"><i data-lucide="shield-check" style="width:24px;height:24px;"></i></div>
+        <div>
+          <div class="stat-val">3S - 5S</div>
+          <div class="stat-label">Tiêu chuẩn quản lý</div>
+          <div class="stat-sub">Kiểm soát Zero NG Quality</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Key Milestones Showcase -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal-down">
+        <div class="section-tag"><i data-lucide="award" style="width:14px;height:14px;"></i> Nền Tảng Chuyên Môn</div>
+        <h2 class="section-title">Các Cột Mốc Năng Lực Trọng Tâm</h2>
+        <p class="section-subtitle">Quá trình tích lũy chuyên môn vững chắc, chuẩn hóa chứng chỉ quốc tế và kinh nghiệm thực chiến công nghiệp.</p>
+      </div>
+
+      <div class="card-grid-2">
+        <div class="luxury-card reveal-left">
+          <div class="card-top">
+            <span class="badge-tag">Học Vấn Đại Học</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Khóa 2023 - 2027</span>
+          </div>
+          <h3 style="font-size:1.25rem;margin-bottom:0.6rem;">Trường Đại Học Lạc Hồng (LHU)</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.2rem;">
+            Chương trình đào tạo Kỹ thuật Cơ điện tử ứng dụng thực tiễn: Cơ học lý thuyết, Chi tiết máy, Đồ họa kỹ thuật CAD, Hệ thống nhúng vi điều khiển và Tự động hóa dây chuyền.
+          </p>
+          <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border-color);display:flex;gap:1.5rem;font-size:0.8rem;font-family:var(--font-mono);color:var(--accent-cyan);">
+            <span>✓ Hệ kỹ sư 4 năm</span>
+            <span>✓ Chuẩn ABET/CDIO</span>
+          </div>
+        </div>
+
+        <div class="luxury-card reveal-right">
+          <div class="card-top">
+            <span class="badge-tag" style="color:var(--accent-gold);border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.1);">Chứng Chỉ Quốc Tế</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Dassault Systèmes</span>
+          </div>
+          <h3 style="font-size:1.25rem;margin-bottom:0.6rem;">SolidWorks CSWA Quốc Tế</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.2rem;">
+            Khẳng định năng lực mô hình hóa chi tiết máy 3D phức tạp, lắp ráp cụm cơ cấu kiểm tra xung đột động học và xuất bản vẽ kỹ thuật 2D đạt chuẩn kỹ thuật quốc tế ISO/JIS.
+          </p>
+          <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border-color);display:flex;gap:1.5rem;font-size:0.8rem;font-family:var(--font-mono);color:var(--accent-gold);">
+            <span>✓ Part & Assembly 3D</span>
+            <span>✓ Bản vẽ Drafting 2D</span>
+          </div>
+        </div>
+
+        <div class="luxury-card reveal-left">
+          <div class="card-top">
+            <span class="badge-tag">Đồ Án Tiêu Biểu</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">Team Leader</span>
+          </div>
+          <h3 style="font-size:1.25rem;margin-bottom:0.6rem;">Khóa Cửa Tự Động Thông Minh</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.2rem;">
+            Đảm nhiệm vai trò Trưởng nhóm: thiết kế toàn bộ cơ cấu vỏ bảo vệ trên SolidWorks, lập trình firmware điều khiển vi điều khiển ARM Cortex-M3 (STM32) và kiểm thử độ bền cơ cấu.
+          </p>
+          <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border-color);display:flex;gap:1.5rem;font-size:0.8rem;font-family:var(--font-mono);color:var(--accent-cyan);">
+            <span>✓ STM32 32-bit</span>
+            <span>✓ Cơ điện tử tích hợp</span>
+          </div>
+        </div>
+
+        <div class="luxury-card reveal-right">
+          <div class="card-top">
+            <span class="badge-tag" style="color:var(--accent-emerald);border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.1);">Thực Chiến Sản Xuất</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--text-muted);">KCN Amata Đồng Nai</span>
+          </div>
+          <h3 style="font-size:1.25rem;margin-bottom:0.6rem;">Thực Tập Brother Sài Gòn</h3>
+          <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.65;margin-bottom:1.2rem;">
+            Trực tiếp tham gia vận hành máy may công nghiệp tiêu chuẩn Nhật Bản. Tuân thủ nghiêm ngặt nguyên tắc Zero-Defect (Không tạo hàng lỗi NG), đảm bảo an toàn lao động và kỷ luật 3S-5S.
+          </p>
+          <div style="margin-top:auto;padding-top:1rem;border-top:1px solid var(--border-color);display:flex;gap:1.5rem;font-size:0.8rem;font-family:var(--font-mono);color:var(--accent-emerald);">
+            <span>✓ Vận hành máy móc</span>
+            <span>✓ Kỷ luật 3S - 5S</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Photo Gallery Showcase -->
+  <section class="section" style="background:rgba(13,20,36,0.35);border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+    <div class="container">
+      <div class="section-header reveal-down">
+        <div class="section-tag"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> Hình Ảnh Thực Tế</div>
+        <h2 class="section-title">Bộ Sưu Tập Hình Ảnh Chân Dung & Hoạt Động</h2>
+        <p class="section-subtitle">Các khoảnh khắc phản ánh phong thái nghiêm túc, sự điềm đạm và tinh thần làm việc nhóm.</p>
+      </div>
+
+      <div class="card-grid-3">
+        <div class="luxury-card gallery-card reveal-up" onclick="openPhotoModal('assets/images/kiet_official.png', 'Chân Dung Sinh Viên LHU', 'Hình ảnh hồ sơ sinh viên chính thức trong màu áo Đại học Lạc Hồng, đại diện cho tác phong chỉn chu và tinh thần kỷ luật.')">
+          <div class="gallery-media">
+            <img src="assets/images/kiet_official.png" alt="Chân dung Võ Minh Kiệt">
+          </div>
+          <span class="badge-tag">Hồ Sơ Chuẩn Mực</span>
+          <h4 style="font-size:1.05rem;margin:0.5rem 0 0.3rem;">Chân Dung Sinh Viên LHU</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Tác phong chỉn chu, tinh thần kỷ luật và thái độ học tập nghiêm túc.</p>
+        </div>
+
+        <div class="luxury-card gallery-card reveal-up" onclick="openPhotoModal('assets/images/avatar_night.jpg', 'Chân Dung Kỹ Sư Võ Minh Kiệt', 'Phong thái tự tin, điềm đạm và khát vọng phát triển nghề nghiệp trong lĩnh vực cơ điện tử và tự động hóa công nghiệp.')">
+          <div class="gallery-media">
+            <img src="assets/images/avatar_night.jpg" alt="Chân dung đêm Võ Minh Kiệt">
+          </div>
+          <span class="badge-tag">Phong Thái Điềm Đạm</span>
+          <h4 style="font-size:1.05rem;margin:0.5rem 0 0.3rem;">Chân Dung Võ Minh Kiệt</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Phong thái tự tin và định hướng phát triển sự nghiệp kỹ sư.</p>
+        </div>
+
+        <div class="luxury-card gallery-card reveal-up" onclick="openPhotoModal('assets/images/kiet_chill.jpg', 'Tư Duy & Nghiên Cứu Độc Lập', 'Khoảnh khắc tập trung tư duy giải pháp kỹ thuật, phân tích kết cấu cơ khí và định hướng mục tiêu tương lai.')">
+          <div class="gallery-media">
+            <img src="assets/images/kiet_chill.jpg" alt="Khoảnh khắc suy tư">
+          </div>
+          <span class="badge-tag">Tác Phong Nghiên Cứu</span>
+          <h4 style="font-size:1.05rem;margin:0.5rem 0 0.3rem;">Tư Duy & Định Hướng</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Tập trung nghiên cứu giải pháp kỹ thuật và tối ưu kết cấu cơ khí.</p>
+        </div>
+
+        <div class="luxury-card gallery-card reveal-up" onclick="openPhotoModal('assets/images/kiet_billiards.png', 'Giao Lưu Thể Thao & Đồng Đội', 'Hoạt động rèn luyện thể chất và gắn kết tập thể, xây dựng tinh thần đồng đội và kỹ năng phối hợp sau các giờ nghiên cứu.')">
+          <div class="gallery-media">
+            <img src="assets/images/kiet_billiards.png" alt="Giao lưu bạn bè">
+          </div>
+          <span class="badge-tag">Tinh Thần Đồng Đội</span>
+          <h4 style="font-size:1.05rem;margin:0.5rem 0 0.3rem;">Gắn Kết Tập Thể</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Rèn luyện tinh thần làm việc nhóm và gắn kết bạn bè đồng hành.</p>
+        </div>
+
+        <div class="luxury-card gallery-card reveal-up" onclick="openPhotoModal('assets/images/kiet_doraemon.jpg', 'Tác Phong Năng Động & Hòa Đồng', 'Năng lượng tích cực, sự cởi mở và khả năng hòa nhập nhanh chóng với văn hóa làm việc tập thể.')">
+          <div class="gallery-media">
+            <img src="assets/images/kiet_doraemon.jpg" alt="Năng động hòa đồng">
+          </div>
+          <span class="badge-tag">Năng Động Trẻ Trung</span>
+          <h4 style="font-size:1.05rem;margin:0.5rem 0 0.3rem;">Hòa Nhập & Tích Cực</h4>
+          <p style="font-size:0.82rem;color:var(--text-muted);">Thái độ tích cực, cởi mở và dễ dàng hòa nhập môi trường mới.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Recruiter CTA Banner -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-banner reveal-up">
+        <h2 style="font-size:2.2rem;margin-bottom:0.8rem;">Sẵn Sàng Gia Nhập & Cống Hiến Cho Doanh Nghiệp</h2>
+        <p style="font-size:0.98rem;max-width:700px;margin:0 auto 1.8rem;color:var(--text-secondary);">
+          Võ Minh Kiệt luôn trân trọng mọi cơ hội được cống hiến năng lực thiết kế CAD SolidWorks, lập trình vi điều khiển STM32 và tác phong làm việc chuẩn 3S-5S Nhật Bản.
+        </p>
+        <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+          <a href="tel:0389979163" class="btn-primary">
+            <i data-lucide="phone-call" style="width:18px;height:18px;"></i>
+            <span>Gọi Trực Tiếp: 0389 979 163</span>
+          </a>
+          <a href="cv.html" class="btn-secondary">
+            <i data-lucide="file-text" style="width:18px;height:18px;color:var(--accent-cyan);"></i>
+            <span>Xem Hồ Sơ CV Trực Tuyến</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer-nav">
+        <li><a href="index.html">Tổng Quan</a></li>
+        <li><a href="hanh-trinh.html">Học Vấn & Chứng Chỉ</a></li>
+        <li><a href="du-an.html">Dự Án & Thực Tập</a></li>
+        <li><a href="cv.html">Xem & Tải CV</a></li>
+      </ul>
+      <div class="footer-copy">
+        &copy; 2026 Võ Minh Kiệt • Kỹ Sư Cơ Điện Tử • Đại Học Lạc Hồng (LHU). All Rights Reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div id="photo-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Đóng"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
+      <img id="modal-img" src="" alt="" style="width:100%;max-height:70vh;object-fit:contain;background:#000;">
+      <div style="padding:1.25rem;">
+        <h4 id="modal-title" style="font-size:1.15rem;margin-bottom:0.3rem;"></h4>
+        <p id="modal-desc" style="font-size:0.85rem;color:var(--text-muted);"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/lucide.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
 </html>
